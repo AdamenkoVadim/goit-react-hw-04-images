@@ -43,6 +43,7 @@ export function App() {
       setPictures(prevPictures => [...prevPictures, ...response.hits]);
       setIsVisibleBtn(true);
       setStatus('resolved');
+      setTotal(response.total);
 
       return;
     }

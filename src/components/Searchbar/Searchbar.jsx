@@ -1,50 +1,43 @@
-import { Component } from "react"
-import css from "components/Searchbar/Searchbar.module.css"
+import { useState } from 'react';
+import css from 'components/Searchbar/Searchbar.module.css';
 import { toast } from 'react-toastify';
 import { AiOutlineSearch } from 'react-icons/ai';
 
-export class Searchbar extends Component{
-  state = {
-    searchName:'',
-  }
+export function Searchbar({ onSubmit }) {
+  const [searchName, setSearchName] = useState('');
 
-  hendleChangeName = (e) => {
-    this.setState({searchName: e.currentTarget.value.toLowerCase()})
-  }
+  const hendleChangeName = e => {
+    setSearchName(e.currentTarget.value.toLowerCase());
+  };
 
-  hendleSubmit = (e) => {
+  const hendleSubmit = e => {
     e.preventDefault();
 
-    if(this.state.searchName.trim() ==='') {
+    if (searchName.trim() === '') {
       toast.warn('Por favor escribe algo!!!');
       return;
     }
-    this.props.onSubmit(this.state.searchName);
-    this.setState({searchName: ''})
-  }
-  
-  render() {
-    return (
-        <header className = {css.Searchbar} >
-          <form 
-            className={css.SearchForm} 
-            onSubmit = {this.hendleSubmit}
-          >
-            
-            <button type="submit" className={css.SearchForm__button}>
-            <AiOutlineSearch size={32}/>
-            </button>
+    onSubmit(searchName);
+    setSearchName('');
+  };
 
-          <input
-            className={css.SearchForm__input}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value = {this.state.searchName}
-            onChange = {this.hendleChangeName}
-          />
-          </form>
-        </header>
-    )}
+  return (
+    <header className={css.Searchbar}>
+      <form className={css.SearchForm} onSubmit={hendleSubmit}>
+        <button type="submit" className={css.SearchForm__button}>
+          <AiOutlineSearch size={32} />
+        </button>
+
+        <input
+          className={css.SearchForm__input}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={searchName}
+          onChange={hendleChangeName}
+        />
+      </form>
+    </header>
+  );
 }

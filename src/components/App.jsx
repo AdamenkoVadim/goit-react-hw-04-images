@@ -44,8 +44,6 @@ export function App() {
       setIsVisibleBtn(true);
       setStatus('resolved');
       setTotal(response.total);
-
-      return;
     }
     getImages();
   }, [searchName, page]);
